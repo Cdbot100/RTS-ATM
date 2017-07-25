@@ -4,34 +4,36 @@ class SynchronousConnector extends message{
 private boolean messageBufferFull = false;
 private boolean responseBufferFull = false;
 private ArrayList <message> messageBuffer = new ArrayList<message>();
-
+private ArrayList <message> responseBuffer = new ArrayList<message>();
 
     public void send (message in, message out){
-        //place message in buffer;
+        messageBuffer.add(in);
         messageBufferFull = true;
-        signal();
+        //signal();
         while (!responseBufferFull){
-            wait();
+           // wait();
         }
-        //remove response from response buffer;
+        responseBuffer.remove(out);
         responseBufferFull = false;
     }
     public void recieve (message out){
         while (!messageBufferFull){
-            wait();
+            //wait();
         } 
-        //remove message from buffer;
+        messageBuffer.remove(out);
         messageBufferFull = false;
     }
 
     public void reply (message response){
-        //Place response in response buffer;
+        responseBuffer.add(response);
         responseBufferFull = true;
-        signal();
+        //signal();
     }
 
     public void isMessage (message result){
-
+        if (messageBufferFull){
+            messageBuffer.remove(result);
+        }
     }
 }
 

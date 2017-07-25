@@ -1,31 +1,33 @@
-monitor MessageQueue{
+import java.io.*;
 
-private Interger maxCount ;
-private Interger messageCount = 0;
+class MessageQueue extends SynchronousConnector{
 
-    public send (in message){
-        while (messageCount = maxCount){
-            wait();
+private int maxCount;
+private int messageCount;
+
+    public void send (message in){
+        while (messageCount == maxCount){
+            //wait();
         } 
         //place message in buffer;
-        //increment messageCount;
-        if (messageCount = 1) {
-            signal();
+        messageCount++;
+        if (messageCount == 1) {
+            //signal();
         }
     }
 
-    public recieve (out message){
-        while (messageCount = 0) {
-            wait();
+    public void recieve (message out){
+        while (messageCount == 0) {
+           // wait();
         }
         //remove message from buffer;
         messageCount--;
-        if (messageCount = maxCount-1){
-            signal();
+        if (messageCount == maxCount-1){
+            //signal();
         } 
     }
 
-    public isMessage(out result){
+    public void isMessage(message result){
 
     }
 
