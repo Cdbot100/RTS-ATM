@@ -2,7 +2,7 @@ class SynchronousConnector{
 private boolean messageBufferFull = false;
 private boolean responseBufferFull = false;
 
-    public send (in message, out response){
+    public void send (in message, out response){
         //place message in buffer;
         messageBufferFull = true;
         signal();
@@ -13,7 +13,7 @@ private boolean responseBufferFull = false;
         responseBufferFull = false;
     }
 
-    public recieve (out message){
+    public void recieve (out message){
         while (!messageBufferFull){
             wait();
         } 
@@ -21,13 +21,13 @@ private boolean responseBufferFull = false;
         messageBufferFull = false;
     }
 
-    public reply (in response){
+    public void reply (in response){
         //Place response in response buffer;
         responseBufferFull = true;
         signal();
     }
 
-    public isMessage (out result){
+    public void isMessage (out result){
 
     }
 }
