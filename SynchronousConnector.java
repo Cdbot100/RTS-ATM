@@ -7,14 +7,15 @@ private boolean responseBufferFull = false;
 private ArrayList <message> messageBuffer = new ArrayList<message>();
 private ArrayList <message> responseBuffer = new ArrayList<message>();
 client ClientObject = new client(); 
+server ServerObject = new server();
+
     public void SynchronousConnector(){
         
-        //server serverobject = new server();
     }
     public void send (message in, message out){
         messageBuffer.add(in);
         messageBufferFull = true;
-        //serverobject.signal();
+        ServerObject.signal();
         while (!responseBufferFull){
             try{
             ClientObject.wait();
@@ -27,11 +28,11 @@ client ClientObject = new client();
     }
     public void recieve (message out){
         while (!messageBufferFull){
-            // try{
-            // ServerObject.wait();
-            // }catch(InterruptedException e) {
-            // //something goes here 
-            // }
+            try{
+            ServerObject.wait();
+            }catch(InterruptedException e) {
+            //something goes here 
+            }
         } 
         messageBuffer.remove(out);
         messageBufferFull = false;
