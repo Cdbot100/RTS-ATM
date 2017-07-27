@@ -6,19 +6,20 @@ private boolean messageBufferFull = false;
 private boolean responseBufferFull = false;
 private ArrayList <message> messageBuffer = new ArrayList<message>();
 private ArrayList <message> responseBuffer = new ArrayList<message>();
-client ClientObject = new client(); 
-server ServerObject = new server();
+client Client = new client(); 
+server Server = new server();
 
-    public void SynchronousConnector(){
-        
+    public void SynchronousConnector(client ClientObject, server ServerObject){
+        this.Client = ClientObject;
+        this.Server = ServerObject;
     }
     public void send (message in, message out){
         messageBuffer.add(in);
         messageBufferFull = true;
-        ServerObject.signal();
+        Server.signal();
         while (!responseBufferFull){
             try{
-            ClientObject.wait();
+            Client.wait();
             }catch(InterruptedException e) {
                 //something goes here 
             }
@@ -29,19 +30,20 @@ server ServerObject = new server();
     public void recieve (message out){
         while (!messageBufferFull){
             try{
-            ServerObject.wait();
+            Server.wait();
             }catch(InterruptedException e) {
             //something goes here 
             }
         } 
         messageBuffer.remove(out);
+        server.RecieveServiceRequest(out);
         messageBufferFull = false;
     }
 
     public void reply (message response){
         responseBuffer.add(response);
         responseBufferFull = true;
-        ClientObject.signal();
+        Client.signal();
     }
 
     public void isMessage (message result){
