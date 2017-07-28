@@ -6,14 +6,18 @@ class client extends Thread{
     public int pin;
     public double balance;
     public int selection;
-    //SynchronousConnector Connector1 = new SynchronousConnector();
-    public void client(/*SynchronousConnector C*/){
-        //Connector1 = C;
+    connector connector1;
+    
+    //public connector connector1 = new connector();
+
+    public void setConnector (connector connector){
+        connector1 = connector;
     }
+
     public void run(){ 
         boolean ValidAccount = false;
         int selection = -1;
-        OurMessage message1 = new OurMessage();
+        OurMessage request = new OurMessage();
         OurMessage response = new OurMessage();
 
         System.out.println("******************************************");
@@ -24,8 +28,8 @@ class client extends Thread{
             account = Integer.parseInt(cin.next());
             System.out.println("Please Enter your pin:");
             pin = Integer.parseInt(cin.next());
-            message1.SetAccount(account, pin);
-            //connector1.send(message1,response);
+            response.SetAccount(account, pin);
+            //connector1.send(response,response);
             if (response.Type == 0){
                 ValidAccount = true;
             }   
@@ -41,24 +45,26 @@ class client extends Thread{
             }
             switch(selection){
                 case 1:
-                    message1.Type = 1; 
-                    //connector1.send(message1,response);
-                    System.out.printf("\nCurrent Balance is $%.2f\n", message1.Balance);
+                    response.Type = 1; 
+                    response =  connector1.send(request);
+                    System.out.printf("\nCurrent Balance is $%.2f\n", response.Balance);
+                    
+
                 break;
                 case 2:
-                    message1.Type = 2; 
-                    //connector1.send(message1,response);
-                    System.out.printf("Your New Balance is $%.2f\n",  message1.Balance);
+                    response.Type = 2; 
+                    //connector1.send(response,response);
+                    System.out.printf("Your New Balance is $%.2f\n",  response.Balance);
                 break;
                 case 3:
-                    message1.Type = 3; 
-                    //connector1.send(message1,response);
-                    System.out.printf("Your New Balance is $%.2f\n",  message1.Balance);
+                    response.Type = 3; 
+                    //connector1.send(response,response);
+                    System.out.printf("Your New Balance is $%.2f\n",  response.Balance);
                 break;
                 case 4:
-                    message1.Type = 4; 
-                    //connector1.send(message1,response);
-                    System.out.printf("Sucessfully Transferred, Your New Balance is $%.2f\n",  message1.Balance);
+                    response.Type = 4; 
+                    //connector1.send(response,response);
+                    System.out.printf("Sucessfully Transferred, Your New Balance is $%.2f\n",  response.Balance);
                 break;
             }
             System.out.print("\nThank For Using our ATM.");
@@ -66,3 +72,29 @@ class client extends Thread{
         }
     }
 }
+
+
+
+
+// public void run(): is used to perform action for a thread.
+// public void start(): starts the execution of the thread.JVM calls the run() method on the thread.
+// public void sleep(long miliseconds): Causes the currently executing thread to sleep (temporarily cease execution) for the specified number of milliseconds.
+// public void join(): waits for a thread to die.
+// public void join(long miliseconds): waits for a thread to die for the specified miliseconds.
+// public int getPriority(): returns the priority of the thread.
+// public int setPriority(int priority): changes the priority of the thread.
+// public String getName(): returns the name of the thread.
+// public void setName(String name): changes the name of the thread.
+// public Thread currentThread(): returns the reference of currently executing thread.
+// public int getId(): returns the id of the thread.
+// public Thread.State getState(): returns the state of the thread.
+// public boolean isAlive(): tests if the thread is alive.
+// public void yield(): causes the currently executing thread object to temporarily pause and allow other threads to execute.
+// public void suspend(): is used to suspend the thread(depricated).
+// public void resume(): is used to resume the suspended thread(depricated).
+// public void stop(): is used to stop the thread(depricated).
+// public boolean isDaemon(): tests if the thread is a daemon thread.
+// public void setDaemon(boolean b): marks the thread as daemon or user thread.
+// public void interrupt(): interrupts the thread.
+// public boolean isInterrupted(): tests if the thread has been interrupted.
+// public static boolean interrupted(): tests if the current thread has been interrupted.
