@@ -19,7 +19,7 @@ server Server = new server();
         Server.signal();
         while (!responseBufferFull){
             try{
-            Client.wait();
+            this.wait();
             }catch(InterruptedException e) {
                 //something goes here 
             }
@@ -27,17 +27,17 @@ server Server = new server();
         responseBuffer.remove(out);
         responseBufferFull = false;
     }
-    public void recieve (message out){
+    public message recieve (message out){
         while (!messageBufferFull){
             try{
-            Server.wait();
+            this.wait();
             }catch(InterruptedException e) {
             //something goes here 
             }
         } 
         messageBuffer.remove(out);
-        server.RecieveServiceRequest(out);
         messageBufferFull = false;
+        return out;
     }
 
     public void reply (message response){
@@ -48,8 +48,9 @@ server Server = new server();
 
     public void isMessage (message result){
         if (messageBufferFull){
-            messageBuffer.remove(result);
+            return true;
         }
+        else return false;
     }
 }
 

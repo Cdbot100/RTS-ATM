@@ -1,4 +1,4 @@
-public class account {
+public class Account {
     public double Balance;
     public int account;
     public int pin;
