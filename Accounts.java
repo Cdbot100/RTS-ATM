@@ -1,0 +1,77 @@
+class Accounts {
+
+    private CheckingAccount checkingAccounts[] = new CheckingAccount[5];
+    private savingsaccount savingsAccounts[] = new savingsaccount[5];
+    private DebitCard debitCards[] = new DebitCard[5]; 
+
+    private checkingAccount1 = new CheckingAccount();
+    private checkingAccount2 = new CheckingAccount();
+    private checkingAccount3 = new CheckingAccount();
+    private checkingAccount4 = new CheckingAccount();
+    private checkingAccount5 = new CheckingAccount();
+
+    private savingsAccount1 = new savingsaccount();
+    private savingsAccount2 = new savingsaccount();
+    private savingsAccount3 = new savingsaccount();
+    private savingsAccount4 = new savingsaccount();
+    private savingsAccount5 = new savingsaccount();
+
+    private debitCard1 = new DebitCard();
+    private debitCard2 = new DebitCard();
+    private debitCard3 = new DebitCard();
+    private debitCard4 = new DebitCard();
+    private debitCard5 = new DebitCard();
+
+    void Accounts()
+    {
+        checkingAccount1.open (1001);
+        checkingAccount2.open (1002);
+        checkingAccount3.open (1003);
+        checkingAccount4.open (1004);
+        checkingAccount5.open (1005);
+
+        checkingAccount1.credit (200);
+        checkingAccount2.credit (200);
+        checkingAccount3.credit (300);
+        checkingAccount4.credit (400);
+        checkingAccount5.credit (500);
+
+        checkingAccounts[0] = checkingAccount1;
+        checkingAccounts[1] = checkingAccount2;
+        checkingAccounts[2] = checkingAccount3;
+        checkingAccounts[3] = checkingAccount4;
+        checkingAccounts[4] = checkingAccount5;
+
+        savingsAccount1.open (2001);
+        savingsAccount2.open (2002);
+        savingsAccount3.open (2003);
+        savingsAccount4.open (2004);
+        savingsAccount5.open (2005);
+
+        savingsAccount1.credit (1100);
+        savingsAccount2.credit (1200);
+        savingsAccount3.credit (1300);
+        savingsAccount4.credit (1400);
+        savingsAccount5.credit (1500);
+
+        savingsAccounts[0] = savingsAccount1;
+        savingsAccounts[1] = savingsAccount2;
+        savingsAccounts[2] = savingsAccount3;
+        savingsAccounts[3] = savingsAccount4;
+        savingsAccounts[4] = savingsAccount5;
+
+        debitCard1.newDebitCard(3001, 3001, 1001, 200);
+        debitCard2.newDebitCard(3002, 3002, 1003, 250);
+        debitCard3.newDebitCard(3003, 3003, 1005, 0);
+        debitCard4.newDebitCard(3004, 3004, 2002, 100);
+        debitCard5.newDebitCard(3005, 3005, 2003, 150);
+
+        debitCards[0] = debitCard1;
+        debitCards[1] = debitCard2;
+        debitCards[2] = debitCard3;
+        debitCards[3] = debitCard4;
+        debitCards[4] = debitCard5;
+   
+    }
+
+}
