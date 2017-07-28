@@ -1,23 +1,34 @@
-import java.io.*;
-public class debitcard extends account{
-    public int cardid;
+public class DebitCard {
+
+    private int cardId;
+    private int pin;
+    private int accountNumber;
+    private float dailyDebitTotal;
+    private float dailyDebitLimit = 300;
     
-    void debitcard(){
-        cardid = ((int)Math.random());
+    void DebitCard(int newCardID, int newPIN, int newAccountNumber, float newDailyDebitTotal)
+    {
+        cardId = newCardID;
+        pin = newPIN;
+        accountNumber = newAccountNumber;
+        dailyDebitTotal = newDailyDebitTotal;   
     }
 
-    boolean validatepin(){
-        if (this.account == this.pin){
+    boolean validatePin(int pinInput)
+    {
+    
+        if (this.pin == pinInput){
         return true;
         }
         else return false;
     }
 
-    void updateDailyDebitTotal(int amt){
-        this.dailydebitlimit -= amt;
+    void updateDailyDebitTotal(float amount){
+        this.dailyDebitTotal += amt;
+// Needs to check to make sure it doesnt go over limit?
     }
 
-    int checkDailyDebitLimit(){
-        return this.dailydebitlimit;
+    float checkDailyDebitLimit(){
+        return this.dailyDebitLimit;
     }
 }

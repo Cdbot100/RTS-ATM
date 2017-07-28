@@ -2,9 +2,11 @@
 
 class server extends Thread {
 
-    private OurMessage request = new OurMessage();
+    public OurMessage request = new OurMessage();
     public OurMessage response = new OurMessage();
-    connector connector1;
+    
+    private Accounts currentAccounts = new Accounts();
+    private connector connector1;
 
     public void setConnector (connector connector){
         connector1 = connector;

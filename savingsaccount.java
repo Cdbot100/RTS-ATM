@@ -1,5 +1,5 @@
-import java.io.*;
-public class savingsaccount extends account{
+
+public class savingsaccount extends Account{
 
     float cumIntrest = 0;
     int debitCount =0;
