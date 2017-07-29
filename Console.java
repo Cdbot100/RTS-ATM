@@ -1,7 +1,7 @@
 
 
 
-public class console {
+public class Console {
     public static void main(String args[]) {
         
         connector connector = new connector();

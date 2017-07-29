@@ -5,7 +5,7 @@ class MessageQueue extends SynchronousConnector{
 private int maxCount;
 private int messageCount;
 
-    public void send (message in){
+    public void send (OurMessage in){
         while (messageCount == maxCount){
             //wait();
         } 
@@ -16,7 +16,7 @@ private int messageCount;
         }
     }
 
-    public void recieve (message out){
+    public void recieve (OurMessage out){
         while (messageCount == 0) {
            // wait();
         }
@@ -27,7 +27,7 @@ private int messageCount;
         } 
     }
 
-    public void isMessage(message result){
+    public void isMessage(OurMessage result){
 
     }
 
