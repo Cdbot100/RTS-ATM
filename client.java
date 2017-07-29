@@ -53,17 +53,17 @@ class client extends Thread{
                 break;
                 case 2:
                     response.requestType = 2; 
-                    connector1.send(response,response);
+                    //connector1.send(response,response);
                     System.out.printf("Your New Balance is $%.2f\n",  response.Balance);
                 break;
                 case 3:
                     response.requestType = 3; 
-                    connector1.send(response,response);
+                    //connector1.send(response,response);
                     System.out.printf("Your New Balance is $%.2f\n",  response.Balance);
                 break;
                 case 4:
                     response.requestType = 4; 
-                    connector1.send(response,response);
+                    //connector1.send(response,response);
                     System.out.printf("Sucessfully Transferred, Your New Balance is $%.2f\n",  response.Balance);
                 break;
             }
