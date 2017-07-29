@@ -1,7 +1,7 @@
 public class Account {
-    public float Balance = 0;
-    public int accountNumber;
-        
+    public float Balance = 0, Intrest;
+    public int accountNumber, pin;
+    public DebitCard Card;
     
     void open (int newAccountNumber)
     {
@@ -17,14 +17,18 @@ public class Account {
         Balance += amount;
     }
 
-    void debit(float amount){
-// Need to make sure return error if tries to pull out more than is in the account - no negative balance
-        Balance -= amount;
-
+    boolean debit(float amount){
+        if (amount < Balance){
+            Balance -= amount;
+            return true;
+        }
+        else return false;
     }
 
     int getAccountNumber(){
         return accountNumber;
     }
+
+    void addIntrest(float rate)
 
 }

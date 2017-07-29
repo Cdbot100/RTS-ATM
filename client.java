@@ -28,7 +28,7 @@ class client extends Thread{
             pin = Integer.parseInt(cin.next());
             request.pin = pin;
             request.Account = account;
-           
+            response =  connector1.send(request);
             if (request.requestType == 0){
                 ValidAccount = true;
             }   
@@ -39,7 +39,7 @@ class client extends Thread{
                 + "\n 1. Check Balance \n 2. Deposit"
                 + "\n 3. Withdraw \n 4. Transfer\n 5. Quit\n");
             selection = cin.nextInt();
-            if (selection < -1 || selection > 5){
+            if (selection <=0 || selection > 5){
                 System.out.println("Error");
             }
             switch(selection){
