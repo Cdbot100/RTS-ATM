@@ -29,6 +29,9 @@ class client extends Thread{
             request.pin = pin;
             request.Account = account;
             response =  connector1.send(request);
+            if (response.requestType == 5){
+                System.out.println("Error: PIN is incorrect");
+                }
             if (request.requestType == 0){
                 ValidAccount = true;
             }   
@@ -56,11 +59,17 @@ class client extends Thread{
                 case 3:
                     response.requestType = 3; 
                     response =  connector1.send(request);
+                    if (response.requestType == 5){
+                        System.out.println("Error: Insuffcient Funds");
+                    }
                     System.out.printf("Your New Balance is $%.2f\n",  response.Balance);
                 break;
                 case 4:
                     response.requestType = 4; 
                     response =  connector1.send(request);
+                    if (response.requestType == 5){
+                        System.out.println("Error Transferring funds, Check Balance");
+                    }
                     System.out.printf("Sucessfully Transferred, Your New Balance is $%.2f\n",  response.Balance);
                 break;
             }
