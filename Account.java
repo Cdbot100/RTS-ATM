@@ -1,5 +1,6 @@
 public class Account {
-    public float Balance = 0, Intrest;
+    public float Balance = 0;
+    public float IntRate;
     public int accountNumber, pin;
     public DebitCard Card;
     
@@ -29,6 +30,8 @@ public class Account {
         return accountNumber;
     }
 
-    void addIntrest(float rate)
+    void addIntrest(float rate){
+        IntRate= rate;
+    }
 
 }
