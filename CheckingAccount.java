@@ -1,6 +1,6 @@
 public class CheckingAccount extends Account
 {
-    public float lastDepositAmount = 0;
+    public float LastDepositAmount = 0;
 
   
 
