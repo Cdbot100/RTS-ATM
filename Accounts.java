@@ -1,26 +1,26 @@
-class Accounts {
+public class Accounts {
 
     private CheckingAccount checkingAccounts[] = new CheckingAccount[5];
     private savingsaccount savingsAccounts[] = new savingsaccount[5];
     private DebitCard debitCards[] = new DebitCard[5]; 
 
-    private checkingAccount1 = new CheckingAccount();
-    private checkingAccount2 = new CheckingAccount();
-    private checkingAccount3 = new CheckingAccount();
-    private checkingAccount4 = new CheckingAccount();
-    private checkingAccount5 = new CheckingAccount();
+    private CheckingAccount checkingAccount1 = new CheckingAccount();
+    private CheckingAccount checkingAccount2 = new CheckingAccount();
+    private CheckingAccount checkingAccount3 = new CheckingAccount();
+    private CheckingAccount checkingAccount4 = new CheckingAccount();
+    private CheckingAccount checkingAccount5 = new CheckingAccount();
 
-    private savingsAccount1 = new savingsaccount();
-    private savingsAccount2 = new savingsaccount();
-    private savingsAccount3 = new savingsaccount();
-    private savingsAccount4 = new savingsaccount();
-    private savingsAccount5 = new savingsaccount();
+    private savingsaccount savingsAccount1 = new savingsaccount();
+    private savingsaccount savingsAccount2 = new savingsaccount();
+    private savingsaccount savingsAccount3 = new savingsaccount();
+    private savingsaccount savingsAccount4 = new savingsaccount();
+    private savingsaccount savingsAccount5 = new savingsaccount();
 
-    private debitCard1 = new DebitCard();
-    private debitCard2 = new DebitCard();
-    private debitCard3 = new DebitCard();
-    private debitCard4 = new DebitCard();
-    private debitCard5 = new DebitCard();
+    private DebitCard debitCard1 = new DebitCard();
+    private DebitCard debitCard2 = new DebitCard();
+    private DebitCard debitCard3 = new DebitCard();
+    private DebitCard debitCard4 = new DebitCard();
+    private DebitCard debitCard5 = new DebitCard();
 
     void Accounts()
     {

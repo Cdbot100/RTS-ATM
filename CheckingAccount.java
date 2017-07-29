@@ -5,6 +5,6 @@ public class CheckingAccount extends Account
   
 
     float readLastDepositAmount(){
-        return LastDepositAmount;
+        return lastDepositAmount;
     }
 }

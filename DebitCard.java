@@ -6,7 +6,7 @@ public class DebitCard {
     private float dailyDebitTotal;
     private float dailyDebitLimit = 300;
     
-    void DebitCard(int newCardID, int newPIN, int newAccountNumber, float newDailyDebitTotal)
+    void newDebitCard(int newCardID, int newPIN, int newAccountNumber, float newDailyDebitTotal)
     {
         cardId = newCardID;
         pin = newPIN;
@@ -24,7 +24,7 @@ public class DebitCard {
     }
 
     void updateDailyDebitTotal(float amount){
-        this.dailyDebitTotal += amt;
+        this.dailyDebitTotal += amount;
 // Needs to check to make sure it doesnt go over limit?
     }
 
