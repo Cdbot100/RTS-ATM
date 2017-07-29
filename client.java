@@ -31,8 +31,9 @@ class client extends Thread{
             response =  connector1.send(request);
             if (response.requestType == 5){
                 System.out.println("Error: PIN is incorrect");
-                }
-            if (request.requestType == 0){
+                ValidAccount = false;
+            }
+            else if (response.requestType == 0){
                 ValidAccount = true;
             }   
         }
