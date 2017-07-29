@@ -48,16 +48,23 @@ class client extends Thread{
             }
             switch(selection){
                 case 1:
+                    System.out.println("Fetching account information:");
                     request.requestType = 1; 
                     response =  connector1.send(request);
                     System.out.printf("\nCurrent Balance is $%.2f\n", response.Balance);
                 break;
                 case 2:
+                    System.out.println("Please Enter Amount for Deposit:");
+                    //read amount in:
                     response.requestType = 2; 
+                    System.out.println("Fetching account information:");                 
                     response =  connector1.send(request);
                     System.out.printf("Your New Balance is $%.2f\n",  response.Balance);
                 break;
                 case 3:
+                    System.out.println("Please Enter Amount for Withdraw:");
+                    //read amount in:
+                    System.out.println("Fetching account information:");
                     response.requestType = 3; 
                     response =  connector1.send(request);
                     if (response.requestType == 5){
@@ -66,6 +73,11 @@ class client extends Thread{
                     System.out.printf("Your New Balance is $%.2f\n",  response.Balance);
                 break;
                 case 4:
+                    System.out.println("Please Enter Account information:");
+                    //read account
+                    System.out.println("Please Enter Amount:");
+                    //read amount
+                    System.out.println("Fetching account information:");
                     response.requestType = 4; 
                     response =  connector1.send(request);
                     if (response.requestType == 5){
