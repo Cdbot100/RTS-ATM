@@ -1,12 +1,11 @@
 import java.util.*;
-
 class client extends Thread{
     public static Scanner cin = new Scanner(System.in);
     public int account;
     public int pin;
     public double balance;
     public int selection;
-
+    
     public connector connector1;
 
     public void setConnector (connector connector){
@@ -67,9 +66,9 @@ class client extends Thread{
                     System.out.printf("Sucessfully Transferred, Your New Balance is $%.2f\n",  response.Balance);
                 break;
             }
-            System.out.print("\nThank For Using our ATM.");
-            System.exit(0);
         }
+        System.out.print("\nThank For Using our ATM.");
+        System.exit(0);
     }
 }
 
