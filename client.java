@@ -7,7 +7,7 @@ class client extends Thread{
     public double balance;
     public int selection;
 
-    public connector connector1 = new connector();
+    public connector connector1;
 
     public void setConnector (connector connector){
         connector1 = connector;
