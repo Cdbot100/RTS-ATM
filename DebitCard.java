@@ -24,7 +24,7 @@ public class DebitCard {
     }
 
     void updateDailyDebitTotal(float amount){
-        this.dailyDebitTotal += amt;
+        this.dailyDebitTotal += amount;
 // Needs to check to make sure it doesnt go over limit?
     }
 
