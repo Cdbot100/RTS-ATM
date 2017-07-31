@@ -1,8 +1,8 @@
 public class Accounts {
 
-    private CheckingAccount checkingAccounts[] = new CheckingAccount[5];
-    private savingsaccount savingsAccounts[] = new savingsaccount[5];
-    private DebitCard debitCards[] = new DebitCard[5]; 
+    public CheckingAccount checkingAccounts[] = new CheckingAccount[5];
+    public savingsaccount savingsAccounts[] = new savingsaccount[5];
+    public DebitCard debitCards[] = new DebitCard[5]; 
 
     private CheckingAccount checkingAccount1 = new CheckingAccount();
     private CheckingAccount checkingAccount2 = new CheckingAccount();
@@ -21,14 +21,19 @@ public class Accounts {
     private DebitCard debitCard3 = new DebitCard();
     private DebitCard debitCard4 = new DebitCard();
     private DebitCard debitCard5 = new DebitCard();
+    
 
-    void Accounts()
+    public Accounts()
     {
+
+// Checking Accounts: Account Number
         checkingAccount1.open (1001);
         checkingAccount2.open (1002);
         checkingAccount3.open (1003);
         checkingAccount4.open (1004);
         checkingAccount5.open (1005);
+
+// Checking Accounts: Starting Balance
 
         checkingAccount1.credit (200);
         checkingAccount2.credit (200);
@@ -42,11 +47,15 @@ public class Accounts {
         checkingAccounts[3] = checkingAccount4;
         checkingAccounts[4] = checkingAccount5;
 
+// Savings Accounts: Account Number
+
         savingsAccount1.open (2001);
         savingsAccount2.open (2002);
         savingsAccount3.open (2003);
         savingsAccount4.open (2004);
         savingsAccount5.open (2005);
+
+// Savings Accounts: Starting Balance
 
         savingsAccount1.credit (1100);
         savingsAccount2.credit (1200);
@@ -59,6 +68,8 @@ public class Accounts {
         savingsAccounts[2] = savingsAccount3;
         savingsAccounts[3] = savingsAccount4;
         savingsAccounts[4] = savingsAccount5;
+
+// Debit Card: CardID, PIN, Account #, dailyDebitTotal
 
         debitCard1.newDebitCard(3001, 3001, 1001, 200);
         debitCard2.newDebitCard(3002, 3002, 1003, 250);

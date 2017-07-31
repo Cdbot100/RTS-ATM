@@ -3,10 +3,11 @@ class client extends Thread{
     public static Scanner cin = new Scanner(System.in);
     public int account;
     public int pin;
-    public double balance;
+    public float balance;
     public int selection;
+    public float transactionAmount;
     
-    public connector connector1;
+    connector connector1;
 
     public void setConnector (connector connector){
         connector1 = connector;
@@ -26,14 +27,17 @@ class client extends Thread{
             account = Integer.parseInt(cin.next());
             System.out.println("Please Enter your pin:");
             pin = Integer.parseInt(cin.next());
+            
             request.pin = pin;
             request.Account = account;
-            response =  connector1.send(request);
+            request.requestType = 0;
+            
+            response =  connector1.send(request);            
             if (response.requestType == 5){
                 System.out.println("Error: PIN is incorrect");
                 ValidAccount = false;
             }
-            else if (response.requestType == 0){
+            else if (response.requestType == 6){
                 ValidAccount = true;
             }   
         }
@@ -55,17 +59,19 @@ class client extends Thread{
                 break;
                 case 2:
                     System.out.println("Please Enter Amount for Deposit:");
-                    //read amount in:
-                    response.requestType = 2; 
+                    transactionAmount = cin.nextFloat();
+                    request.transactionAmount = transactionAmount;
+                    request.requestType = 2; 
                     System.out.println("Fetching account information:");                 
                     response =  connector1.send(request);
                     System.out.printf("Your New Balance is $%.2f\n",  response.Balance);
                 break;
                 case 3:
                     System.out.println("Please Enter Amount for Withdraw:");
-                    //read amount in:
+                    transactionAmount = cin.nextFloat();
+                    request.transactionAmount = transactionAmount;
                     System.out.println("Fetching account information:");
-                    response.requestType = 3; 
+                    request.requestType = 3; 
                     response =  connector1.send(request);
                     if (response.requestType == 5){
                         System.out.println("Error: Insuffcient Funds");
@@ -78,7 +84,7 @@ class client extends Thread{
                     System.out.println("Please Enter Amount:");
                     //read amount
                     System.out.println("Fetching account information:");
-                    response.requestType = 4; 
+                    request.requestType = 4; 
                     response =  connector1.send(request);
                     if (response.requestType == 5){
                         System.out.println("Error Transferring funds, Check Balance");

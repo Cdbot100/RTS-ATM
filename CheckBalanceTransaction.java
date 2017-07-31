@@ -1,7 +1,7 @@
 import java.io.*;
 public class CheckBalanceTransaction{
 
-    double CheckBalance(account a){
+    float CheckBalance(Account a){
         return a.Balance;
     }
 }

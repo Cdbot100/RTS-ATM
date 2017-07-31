@@ -1,8 +1,8 @@
 public class DebitCard {
 
-    private int cardId;
-    private int pin;
-    private int accountNumber;
+    public int cardId;
+    public int pin;
+    public int accountNumber;
     private float dailyDebitTotal;
     private float dailyDebitLimit = 300;
     
@@ -14,13 +14,13 @@ public class DebitCard {
         dailyDebitTotal = newDailyDebitTotal;   
     }
 
-    boolean validatePin(int pinInput)
+    int validatePin(int pinInput)
     {
     
         if (this.pin == pinInput){
-        return true;
+        return this.accountNumber;
         }
-        else return false;
+        else return 0;
     }
 
     void updateDailyDebitTotal(float amount){
@@ -28,7 +28,10 @@ public class DebitCard {
 // Needs to check to make sure it doesnt go over limit?
     }
 
-    float checkDailyDebitLimit(){
-        return this.dailyDebitLimit;
+    boolean checkDailyDebitLimit(float amount){
+        if ((dailyDebitTotal + amount) > dailyDebitLimit)
+            return false;
+        else
+            return true; 
     }
 }

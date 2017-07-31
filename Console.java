@@ -13,8 +13,9 @@ public class Console {
         connector.setClient(c);
         connector.setServer(s);
 
-        c.start();
         s.start();
+        c.start();
+        
         
 
       

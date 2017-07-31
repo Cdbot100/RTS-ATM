@@ -5,8 +5,8 @@ public class connector
     private boolean responseBufferFull; 
     private OurMessage requestBuffer = new OurMessage();
     private OurMessage responseBuffer = new OurMessage();
-    private client client = new client();
-    private server server = new server();
+    private client client; 
+    private server server; 
 
 // Constructor
 
@@ -31,6 +31,7 @@ public class connector
 
     public OurMessage send (OurMessage request)
     {
+        
         requestBuffer = request;
         requestBufferFull = true;
     
@@ -38,6 +39,8 @@ public class connector
         {
             server.notify();
         }
+
+              
        synchronized (client)
        { 
             try
@@ -48,10 +51,7 @@ public class connector
                 }
             }
             catch(InterruptedException c)
-            {
-           
-            //throw new RuntimeException(c);
-            }
+            {}
        }
 
         responseBufferFull = false;
@@ -73,6 +73,7 @@ public class connector
          
         }
 
+        
         requestBufferFull = false;
         return requestBuffer;
     }
