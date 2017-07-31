@@ -3,62 +3,62 @@ class client extends Thread{
     public static Scanner cin = new Scanner(System.in);
     public int account;
     public int pin;
-    public float balance;
+    public float balance;                                           //inital variables
     public int selection;
     public float transactionAmount;
     public int transferAccount;
     
-    connector connector1;
+    connector connector1;                                           //our connector 
 
-    public void setConnector (connector connector){
+    public void setConnector (connector connector){                 //method to set connector 
         connector1 = connector;
     }
 
-    public void run(){ 
+    public void run(){                                              //main method
         boolean ValidAccount = false;
-        int selection = -1;
+        int selection = -1;                                         //init selections
         OurMessage request = new OurMessage();
-        OurMessage response = new OurMessage();
+        OurMessage response = new OurMessage();                     //two messages, one for request, one for response
 
         System.out.println("******************************************");
-        System.out.println("           Welcome to MSU-ATM");
+        System.out.println("           Welcome to MSU-ATM");        //user output 
         System.out.println("******************************************");
-        while(!ValidAccount){
+        while(!ValidAccount){                                       //while account not valid
             System.out.println("Please Enter your account Number:");
             account = Integer.parseInt(cin.next());
             System.out.println("Please Enter your pin:");
-            pin = Integer.parseInt(cin.next());
+            pin = Integer.parseInt(cin.next());                     //request account and pin
             
             request.pin = pin;
             request.Account = account;
             request.requestType = 0;
             
-            response =  connector1.send(request);            
+            response =  connector1.send(request);                   //have server verify account
             if (response.requestType == 5){
-                System.out.println("Error: PIN is incorrect");
+                System.out.println("Error: PIN is incorrect");      //if account is invalid
                 ValidAccount = false;
             }
-            else if (response.requestType == 6){
+            else if (response.requestType == 6){                    //if account is valid
                 ValidAccount = true;
             }   
         }
-        while(selection != 5){
+        while(selection != 5){                                      //loop for services
             System.out.println("******************************************");
-            System.out.println("Please make your selection:"
+            System.out.println("Please make your selection:"        //user makes selection
                 + "\n 1. Check Balance \n 2. Deposit"
                 + "\n 3. Withdraw \n 4. Transfer\n 5. Quit\n");
             selection = cin.nextInt();
-            if (selection <=0 || selection > 5){
+            if (selection <=0 || selection > 5){                    //if incorrect selection
                 System.out.println("Error");
             }
-            switch(selection){
+            switch(selection){                                      //check balance transaction
                 case 1:
                     System.out.println("Fetching account information:");
                     request.requestType = 1; 
                     response =  connector1.send(request);
                     System.out.printf("\nCurrent Balance is $%.2f\n", response.Balance);
                 break;
-                case 2:
+                case 2:                                             //Deposit Transaction
                     System.out.println("Please Enter Amount for Deposit:");
                     transactionAmount = cin.nextFloat();
                     request.transactionAmount = transactionAmount;
@@ -67,7 +67,7 @@ class client extends Thread{
                     response =  connector1.send(request);
                     System.out.printf("Your New Balance is $%.2f\n",  response.Balance);
                 break;
-                case 3:
+                case 3:                                             //Withdraw Transaction
                     System.out.println("Please Enter Amount for Withdraw:");
                     transactionAmount = cin.nextFloat();
                     request.transactionAmount = transactionAmount;
@@ -79,7 +79,7 @@ class client extends Thread{
                     }
                     System.out.printf("Your New Balance is $%.2f\n",  response.Balance);
                 break;
-                case 4:
+                case 4:                                             //transfer funds 
                     System.out.println("Please Enter Account information:");
                     transferAccount = cin.nextInt();
                     request.transferAccount = transferAccount;
@@ -96,7 +96,7 @@ class client extends Thread{
                 break;
             }
         }
-        System.out.print("\nThank For Using our ATM.");
+        System.out.print("\nThank For Using our ATM.");             //fin
         System.exit(0);
     }
 }
