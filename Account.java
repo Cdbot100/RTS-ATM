@@ -19,7 +19,7 @@ public class Account {
     }
 
     boolean debit(float amount){
-        if (amount < Balance){
+        if (amount <= Balance){
             Balance -= amount;
             return true;
         }

@@ -1,7 +1,6 @@
 public class WithdrawlTransaction{
 
     private int accountIndex;
-    private DebitCard debitCardCopy;
     private CheckingAccount checkingAccounts[];
     private savingsaccount savingsAccounts[];
     private DebitCard debitCards[];

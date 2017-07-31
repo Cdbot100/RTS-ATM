@@ -18,6 +18,7 @@ class server extends Thread {
 
     private CheckBalanceTransaction balanceCheck = new CheckBalanceTransaction();
     private WithdrawlTransaction withdraw = new WithdrawlTransaction();
+    private TransferTransaction transfer = new TransferTransaction();
 
     public void setConnector (connector connector){
         connector1 = connector;
@@ -118,6 +119,17 @@ class server extends Thread {
             
 // Transfer            
                 case 4:
+
+                    transfer.transferFunds(currentAccounts.debitCards[accountIndex].cardId, request.pin, request.transactionAmount, request.transferAccount, currentAccounts.checkingAccounts, currentAccounts.savingsAccounts, currentAccounts.debitCards);
+
+                    if (accountType == 1)                   
+                        response.Balance = balanceCheck.CheckBalance(currentAccounts.savingsAccounts[accountIndex]);
+                    
+                    else                   
+                        response.Balance = balanceCheck.CheckBalance(currentAccounts.checkingAccounts[accountIndex]);
+                                        
+                    connector1.reply(response);
+
                 break;
             }
         }
