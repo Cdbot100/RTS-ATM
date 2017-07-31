@@ -6,6 +6,7 @@ class client extends Thread{
     public float balance;
     public int selection;
     public float transactionAmount;
+    public int transferAccount;b
     
     connector connector1;
 
@@ -80,9 +81,11 @@ class client extends Thread{
                 break;
                 case 4:
                     System.out.println("Please Enter Account information:");
-                    //read account
+                    transferAccount = cin.nextInt();
+                    request.transferAccount = transferAccount;
                     System.out.println("Please Enter Amount:");
-                    //read amount
+                    transactionAmount = cin.nextFloat();
+                    request.transactionAmount= transactionAmount;
                     System.out.println("Fetching account information:");
                     request.requestType = 4; 
                     response =  connector1.send(request);

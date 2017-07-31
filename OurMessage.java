@@ -9,9 +9,10 @@
 //      
 
 public class OurMessage {
-    public int requestType, Account, pin;
+    public int requestType, Account, pin, transferAccount;
     public float Balance;
     public float transactionAmount;
+
     
 
 }
