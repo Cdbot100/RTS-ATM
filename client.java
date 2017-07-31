@@ -6,7 +6,7 @@ class client extends Thread{
     public float balance;
     public int selection;
     public float transactionAmount;
-    public int transferAccount;b
+    public int transferAccount;
     
     connector connector1;
 
