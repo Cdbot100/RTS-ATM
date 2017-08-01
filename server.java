@@ -9,12 +9,17 @@ class server extends Thread {
     private connector connector1;
 
     private DebitCard debitCardCopy = new DebitCard();
-    private int accountIndex;
 
-    // accountType 1 = Savings
-    // accountType 2 = Checking
+// accountType 1 = Savings
+// accountType 2 = Checking
     
     private int accountType;
+
+// accountFlag = false: account not found
+// accountFlag = true: account found
+
+    private boolean accountFlag = false;
+
 
     private CheckBalanceTransaction balanceCheck = new CheckBalanceTransaction();
     private WithdrawlTransaction withdraw = new WithdrawlTransaction();
@@ -49,37 +54,55 @@ class server extends Thread {
             {
 // Debit Card PIN check
                 case 0:
-// Loop through Debit Card Records and find Card associated with inputed Account Number
+
+// Loop through Debit Card Records and find Card associated with inputed debitCardId
                     
                     for (int i=0; i<5; i=i+1)
                     {
-                        if (currentAccounts.debitCards[i].accountNumber == request.Account)
+                        if (currentAccounts.debitCards[i].cardId == request.debitId)
                         {
+                            accountFlag = true;
                             debitCardCopy = currentAccounts.debitCards[i];
-                            accountIndex = i;
-                            if (request.Account < 2000)
+                           
+                            if (debitCardCopy.accountNumber < 2000)
                                 accountType = 2;
                             else
                                 accountType = 1; 
                         }
                     }
+                             
+// Return account error if Debit Card not found
+                        
+                    if (accountFlag == false)
+                    {   
+                        response.requestType = 11;
+                        connector1.reply(response);
+                    }
+
 // Check PIN entered with Debit Card Data and return response to Client through Connector
 
-                    if (debitCardCopy.pin == request.pin)
-                        response.requestType = 6;
-                    else
-                        response.requestType = 5;
-                
-                    connector1.reply(response);
+                    else if (accountFlag = true)
+
+                        if (debitCardCopy.pin == request.pin)
+                        {
+                            response.requestType = 6;
+                            connector1.reply(response);
+                        }
+                        else
+                        {
+                            response.requestType = 7;
+                            connector1.reply(response);
+                        }
                 break;
 
 // Check Balance
                 case 1:
-                    if (accountType == 1)
-                        response.Balance = balanceCheck.CheckBalance(currentAccounts.savingsAccounts[accountIndex]);
-                    else
-                        response.Balance = balanceCheck.CheckBalance(currentAccounts.checkingAccounts[accountIndex]);
+                 
+                    response.Balance = balanceCheck.CheckBalance(request.debitId, request.pin, currentAccounts.checkingAccounts, currentAccounts.savingsAccounts, currentAccounts.debitCards);  
                     
+                    if (response.Balance == -1)
+                        response.requestType = 7;
+                        
                     connector1.reply(response);
 
                 break;
@@ -89,13 +112,30 @@ class server extends Thread {
 
                     if (accountType == 1)
                     {
-                        currentAccounts.savingsAccounts[accountIndex].credit(request.transactionAmount);
-                        response.Balance = balanceCheck.CheckBalance(currentAccounts.savingsAccounts[accountIndex]);
+                         for (int i=0; i<5; i=i+1)
+                        {
+                            if (debitCardCopy.accountNumber == currentAccounts.savingsAccounts[i].accountNumber)
+                                currentAccounts.savingsAccounts[i].credit(request.transactionAmount);
+                        }
+
+                        response.Balance = balanceCheck.CheckBalance(request.debitId, request.pin, currentAccounts.checkingAccounts, currentAccounts.savingsAccounts, currentAccounts.debitCards);  
+                    
+                        if (response.Balance == -1)
+                            response.requestType = 7;
                     }
+
                     else
                     {
-                        currentAccounts.checkingAccounts[accountIndex].credit(request.transactionAmount);
-                        response.Balance = balanceCheck.CheckBalance(currentAccounts.checkingAccounts[accountIndex]);
+                        for (int i=0; i<5; i=i+1)
+                        {
+                            if (debitCardCopy.accountNumber == currentAccounts.checkingAccounts[i].accountNumber)
+                                currentAccounts.checkingAccounts[i].credit(request.transactionAmount);
+                        }
+                        
+                        response.Balance = balanceCheck.CheckBalance(request.debitId, request.pin, currentAccounts.checkingAccounts, currentAccounts.savingsAccounts, currentAccounts.debitCards);  
+                        
+                        if (response.Balance == -1)
+                            response.requestType = 7;
                     }
                     
                     connector1.reply(response);
@@ -105,14 +145,9 @@ class server extends Thread {
 // Withdrawal
                 case 3:
 
-                    withdraw.WithdrawFunds(currentAccounts.debitCards[accountIndex].cardId, request.pin, request.transactionAmount, currentAccounts.checkingAccounts, currentAccounts.savingsAccounts, currentAccounts.debitCards);
-
-                     if (accountType == 1)                   
-                        response.Balance = balanceCheck.CheckBalance(currentAccounts.savingsAccounts[accountIndex]);
+                    response.requestType = withdraw.WithdrawFunds(request.debitId, request.pin, request.transactionAmount, currentAccounts.checkingAccounts, currentAccounts.savingsAccounts, currentAccounts.debitCards);
+                    response.Balance = balanceCheck.CheckBalance(request.debitId, request.pin, currentAccounts.checkingAccounts, currentAccounts.savingsAccounts, currentAccounts.debitCards);  
                     
-                    else                   
-                        response.Balance = balanceCheck.CheckBalance(currentAccounts.checkingAccounts[accountIndex]);
-                                        
                     connector1.reply(response);
                     
                 break;
@@ -120,14 +155,9 @@ class server extends Thread {
 // Transfer            
                 case 4:
 
-                    transfer.transferFunds(currentAccounts.debitCards[accountIndex].cardId, request.pin, request.transactionAmount, request.transferAccount, currentAccounts.checkingAccounts, currentAccounts.savingsAccounts, currentAccounts.debitCards);
+                    response.requestType = transfer.transferFunds(request.debitId, request.pin, request.transactionAmount, request.transferAccount, currentAccounts.checkingAccounts, currentAccounts.savingsAccounts, currentAccounts.debitCards);
+                    response.Balance = balanceCheck.CheckBalance(request.debitId, request.pin, currentAccounts.checkingAccounts, currentAccounts.savingsAccounts, currentAccounts.debitCards);  
 
-                    if (accountType == 1)                   
-                        response.Balance = balanceCheck.CheckBalance(currentAccounts.savingsAccounts[accountIndex]);
-                    
-                    else                   
-                        response.Balance = balanceCheck.CheckBalance(currentAccounts.checkingAccounts[accountIndex]);
-                                        
                     connector1.reply(response);
 
                 break;

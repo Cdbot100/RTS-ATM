@@ -1,25 +1,44 @@
-import javax.net.ssl.ExtendedSSLSession;
+
+// Return values:
+//      7 - Invalid PIN Number
+//      8 - Daily Debit Limit Error
+//      9 - Account Balance Error
+//      10 - Request Success
+//      11 - Invalid Account
+//      12 - Self Transfer Error
 
 public class TransferTransaction{
 
+    private int debitCardIndex;
     private int accountIndex;
     private int recieveAccountIndex;
-    // recieveAccountType 1 = checking account
-    // recieveAccountType 2 = savings account
+
+// recieveAccountType 1 = checking account
+// recieveAccountType 2 = savings account
     private int recieveAccountType;
+
+// accountFlag = false: account not found
+// accountFlag = true: account found
+    private boolean accountFlag = false;
+
     private CheckingAccount checkingAccounts[];
     private savingsaccount savingsAccounts[];
     private DebitCard debitCards[];
 
-    void transferFunds(int cardID, int pin, float amount, int toAccount, CheckingAccount checkingAccounts[], savingsaccount savingsAccounts[], DebitCard debitCards[])
+    int transferFunds(int cardID, int pin, float amount, int toAccount, CheckingAccount checkingAccounts[], savingsaccount savingsAccounts[], DebitCard debitCards[])
     {
 // Loop through Debit Card Records and find Card associated with cardID
 
         for (int i=0; i<5; i=i+1)
         {
             if (debitCards[i].cardId == cardID)
-                accountIndex = i;
+                debitCardIndex = i;
         }
+
+// Return error if transfer account is the same as origin account
+
+        if (toAccount == debitCards[debitCardIndex].accountNumber)
+            return 12;
 
 // Loop through checking or savings accounts to find account to recieve funds
 
@@ -27,58 +46,90 @@ public class TransferTransaction{
             for (int i=0; i<5; i=i+1)
             {
                 if (checkingAccounts[i].accountNumber == toAccount)
+                {
                     recieveAccountIndex = i;
                     recieveAccountType = 1;
+                    accountFlag = true;
+                }
             }
+
         else
             for (int i=0; i<5; i=i+1)
             {
                 if (savingsAccounts[i].accountNumber == toAccount)
+                {
                     recieveAccountIndex = i;
                     recieveAccountType = 2;
+                    accountFlag = true;
+                }
             }
 
-// check match of CardID and PIN
+// Return error if no transfer account exists
 
-        if (debitCards[accountIndex].validatePin(pin) == 0)
-            System.out.println("Withdraw Error: Invalid PIN Number");
+        if (!accountFlag)
+            return 11;
+
+// check match of CardID and PIN
+    
+
+        if (debitCards[debitCardIndex].validatePin(pin) == 0)
+            return 7;
         else
         {
 
 // check account balance for sufficient funds, either return error or process transfer
-            if (debitCards[accountIndex].accountNumber < 2000)
-                    if (checkingAccounts[accountIndex].Balance < amount)
-                        System.out.println("Withdraw Error: Amount greater than Account Balance");
+
+            if (debitCards[debitCardIndex].accountNumber < 2000)
+            {
+                for (int i=0; i<5; i=i+1)
+                {
+                    if (debitCards[debitCardIndex].accountNumber == checkingAccounts[i].accountNumber)
+                        accountIndex = i;
+                }
+
+                if (checkingAccounts[accountIndex].Balance < amount)
+                        return 9;
                     else 
                     {
                         checkingAccounts[accountIndex].debit(amount);
                         if (recieveAccountType == 1)
+                        {
                             checkingAccounts[recieveAccountIndex].credit(amount);
+                            return 10;
+                        }
                         else
+                        {
                             savingsAccounts[recieveAccountIndex].credit(amount);
+                            return 10;
+                        }
                     }
-                else
-                    if (savingsAccounts[accountIndex].Balance < amount)
-                        System.out.println("Withdraw Error: Amount greater than Account Balance");
-                    else 
+            }
+            
+            else
+            {
+                for (int i=0; i<5; i=i+1)
+                {
+                    if (debitCards[debitCardIndex].accountNumber == savingsAccounts[i].accountNumber)
+                        accountIndex = i;
+                }
+
+                if (savingsAccounts[accountIndex].Balance < amount)
+                    return 9;
+                else 
+                {
+                    savingsAccounts[accountIndex].debit(amount);
+                    if (recieveAccountType == 1)
                     {
-                        savingsAccounts[accountIndex].debit(amount);
-                        if (recieveAccountType == 1)
-                            checkingAccounts[recieveAccountIndex].credit(amount);
-                        else
-                            savingsAccounts[recieveAccountIndex].credit(amount);
+                        checkingAccounts[recieveAccountIndex].credit(amount);
+                        return 10;
                     }
-
-
+                    else
+                    {
+                        savingsAccounts[recieveAccountIndex].credit(amount);
+                        return 10;
+                    }
+                }
+            }
         }
-
-
-
-
-    } 
-
-
-
-
-    
+    }
 }

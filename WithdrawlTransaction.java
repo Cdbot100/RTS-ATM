@@ -1,11 +1,18 @@
+// Return values:
+//      7 - Invalid PIN Number
+//      8 - Daily Debit Limit Error
+//      9 - Account Balance Error
+//      10 - Request Success
+
 public class WithdrawlTransaction{
 
     private int accountIndex;
+    private int debitCardIndex;
     private CheckingAccount checkingAccounts[];
     private savingsaccount savingsAccounts[];
     private DebitCard debitCards[];
 
-    void WithdrawFunds(int cardID, int pin, float amount, CheckingAccount checkingAccounts[], savingsaccount savingsAccounts[], DebitCard debitCards[])   
+    int WithdrawFunds(int cardID, int pin, float amount, CheckingAccount checkingAccounts[], savingsaccount savingsAccounts[], DebitCard debitCards[])   
     {
 
 // Loop through Debit Card Records and find Card associated with cardID
@@ -13,37 +20,55 @@ public class WithdrawlTransaction{
         for (int i=0; i<5; i=i+1)
         {
             if (debitCards[i].cardId == cardID)
-                accountIndex = i;
+                debitCardIndex = i;
         }
 
 // check match of CardID and PIN
 
-        if (debitCards[accountIndex].validatePin(pin) == 0)
-            System.out.println("Withdraw Error: Invalid PIN Number");
+        if (debitCards[debitCardIndex].validatePin(pin) == 0)
+            return 7;
         else
         {
 // check daily debit limit
-            if (!(debitCards[accountIndex].checkDailyDebitLimit(amount)))
-                System.out.println("Withdraw Error: Amount greater than Daily Debit Limit");
+            if (!(debitCards[debitCardIndex].checkDailyDebitLimit(amount)))
+                return 8;
             else
             {
 // check account balance
-                if (debitCards[accountIndex].accountNumber < 2000)
+                if (debitCards[debitCardIndex].accountNumber < 2000)
+                {
+                    for (int i=0; i<5; i=i+1)
+                    {
+                        if (debitCards[debitCardIndex].accountNumber == checkingAccounts[i].accountNumber)
+                            accountIndex = i;
+                    }
+
                     if (checkingAccounts[accountIndex].Balance < amount)
-                        System.out.println("Withdraw Error: Amount greater than Account Balance");
+                        return 9;
                     else 
                     {
                         debitCards[accountIndex].updateDailyDebitTotal(amount);
                         checkingAccounts[accountIndex].debit(amount);
+                        return 10;
                     }
+                }
                 else
+                {
+                    for (int i=0; i<5; i=i+1)
+                    {
+                        if (debitCards[debitCardIndex].accountNumber == savingsAccounts[i].accountNumber)
+                            accountIndex = i;
+                    }
+                    
                     if (savingsAccounts[accountIndex].Balance < amount)
-                        System.out.println("Withdraw Error: Amount greater than Account Balance");
+                        return 9;
                     else 
                     {
                         debitCards[accountIndex].updateDailyDebitTotal(amount);
                         savingsAccounts[accountIndex].debit(amount);
+                        return 10;
                     }
+                }
             }        
         }            
 
