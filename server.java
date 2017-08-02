@@ -52,6 +52,7 @@ class server extends Thread {
         
             switch (request.requestType)
             {
+                
 // Debit Card PIN check
                 case 0:
 
