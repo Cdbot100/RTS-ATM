@@ -57,7 +57,7 @@ class client extends Thread{
                 + "\n 3. Withdraw \n 4. Transfer\n 5. Quit\n");
             selection = cin.nextInt();
             if (selection <=0 || selection > 5){                    //if incorrect selection
-                System.out.println("Error");
+                System.out.println("Selection Error");
             }
             switch(selection){                                      //check balance transaction
                 case 1:

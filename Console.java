@@ -1,6 +1,3 @@
-
-
-
 public class Console {
     public static void main(String args[]) {
         
@@ -15,9 +12,5 @@ public class Console {
 
         s.start();
         c.start();
-        
-        
-
-      
     }
 }

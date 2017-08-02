@@ -8,16 +8,12 @@ public class connector
     private client client; 
     private server server; 
 
-// Constructor
-
     public void connector()
     {
         requestBufferFull = false;
         responseBufferFull= false;
 
     }
-
-// Methods
 
     public void setClient (client newClient){
         client = newClient;

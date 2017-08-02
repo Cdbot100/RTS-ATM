@@ -47,7 +47,7 @@ public class WithdrawlTransaction{
                         return 9;
                     else 
                     {
-                        debitCards[accountIndex].updateDailyDebitTotal(amount);
+                        debitCards[debitCardIndex].updateDailyDebitTotal(amount);
                         checkingAccounts[accountIndex].debit(amount);
                         return 10;
                     }
@@ -64,7 +64,7 @@ public class WithdrawlTransaction{
                         return 9;
                     else 
                     {
-                        debitCards[accountIndex].updateDailyDebitTotal(amount);
+                        debitCards[debitCardIndex].updateDailyDebitTotal(amount);
                         savingsAccounts[accountIndex].debit(amount);
                         return 10;
                     }

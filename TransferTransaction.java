@@ -19,7 +19,7 @@ public class TransferTransaction{
 
 // accountFlag = false: account not found
 // accountFlag = true: account found
-    private boolean accountFlag = false;
+    private boolean accountFlag;
 
     private CheckingAccount checkingAccounts[];
     private savingsaccount savingsAccounts[];
@@ -27,6 +27,9 @@ public class TransferTransaction{
 
     int transferFunds(int cardID, int pin, float amount, int toAccount, CheckingAccount checkingAccounts[], savingsaccount savingsAccounts[], DebitCard debitCards[])
     {
+// set accountFlag
+        accountFlag = false;
+
 // Loop through Debit Card Records and find Card associated with cardID
 
         for (int i=0; i<5; i=i+1)

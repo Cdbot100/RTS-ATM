@@ -5,7 +5,8 @@ public class savingsaccount extends Account{
     int debitCount =0;
     int maxFreeDebits = 3;
     double bankcharge = 1.50;
-    double intrestRate = .05; 
+    double intrestRate = .05;
+    float interest = 0; 
 
     float readCumulitiveIntrest() {
         return cumIntrest;
@@ -16,7 +17,8 @@ public class savingsaccount extends Account{
     }
 
     void addIntrest(float rate){
-        Balance *= intrestRate;
+        interest *= intrestRate;
+        Balance += interest;
     }
     
 }
